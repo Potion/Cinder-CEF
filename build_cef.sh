@@ -103,6 +103,7 @@ elif [[ "$PLATFORM" == 'win' ]]; then
     cp "cef/Release/libcef.lib" "libs/cef/lib/vs/x64/Debug"
     cp "cef/libcef_dll_wrapper/Debug/libcef_dll_wrapper.lib" "libs/cef/lib/vs/x64/Debug/"
 
+    mkdir -p "libs/cef/export/vs/x64"
     cp -r cef/Release/* "libs/cef/export/vs/x64/"
     cp -r cef/Resources/* "libs/cef/export/vs/x64/"
 
