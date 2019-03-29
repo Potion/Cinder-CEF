@@ -351,13 +351,15 @@ namespace coc {
     
     }
     
-    void ciCEF::bindCallFromJS(CefRefPtr<CefListValue> args) {
+    void ciCEF::bindCallFromJS(std::string functionName, CefRefPtr<CefListValue> args) {
         
 		ciCEFJSMessageArgs msg;
 		msg.args = args;
 		CI_LOG_I("Received JS call in ciCEF");
 
-		signalJS.emit(msg);
+		if (signalJS.find(functionName) != signalJS.end()) {
+			signalJS[functionName].emit(msg);
+		}
 
     }
     

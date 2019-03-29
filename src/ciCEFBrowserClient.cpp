@@ -43,7 +43,7 @@ bool ciCEFBrowserClient::OnProcessMessageReceived(
 	
 	std::string jsBindPrefix = "js-bind-";
 	if (name.compare(0, jsBindPrefix.size(), jsBindPrefix) == 0) {
-		mParent->bindCallFromJS(args);
+		mParent->bindCallFromJS(name, args);
 		return true;
 	}
 	else if (name == "OnV8ContextCreated") {

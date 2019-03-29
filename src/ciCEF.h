@@ -47,12 +47,12 @@ namespace coc {
         void onLoadEnd(int httpStatusCode);
         
 		void executeJS(const std::string& command);
-		ci::signals::Signal<void(ciCEFJSMessageArgs&)> signalJS;
+		std::map<std::string, ci::signals::Signal<void(ciCEFJSMessageArgs&)> > signalJS;
 
 		template <typename ArgumentsType, class ListenerClass>
 		void bind(ListenerClass * listener, std::string functionName, void(ListenerClass::*listenerMethod)(ArgumentsType&) );
 
-        void bindCallFromJS(CefRefPtr<CefListValue> args);
+        void bindCallFromJS(std::string functionName, CefRefPtr<CefListValue> args);
       
         bool mV8ContextCreated = false; // Don't set this
         bool isReady() const { return mV8ContextCreated; }
@@ -108,7 +108,9 @@ namespace coc {
 			browser()->SendProcessMessage(PID_RENDERER, message);
 		}
 
-        signalJS.connect(cinder::signals::slot(listener, listenerMethod));
+		std::string jsBindPrefix = "js-bind-";
+		std::string signalKey = jsBindPrefix + functionName;
+		signalJS[signalKey].connect(cinder::signals::slot(listener, listenerMethod));
 
 	}
 }
